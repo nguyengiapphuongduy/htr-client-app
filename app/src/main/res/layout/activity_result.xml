@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp"
+    tools:context=".ResultActivity">
+
+    <EditText
+        android:id="@+id/result_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/out_filename_text"
+        android:layout_alignParentTop="true"
+        android:layout_margin="0dp"
+        android:autofillHints=""
+        android:background="@drawable/rectangle_border"
+        android:gravity="start|center"
+        android:hint="@string/no_result"
+        android:inputType="textMultiLine"
+        android:minLines="10"
+        android:padding="16dp"
+        android:scrollbars="vertical" />
+
+    <EditText
+        android:id="@+id/out_filename_text"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_above="@+id/save_button"
+        android:layout_marginVertical="16dp"
+        android:autofillHints=""
+        android:background="@drawable/rectangle_border"
+        android:hint="@string/text_file_name"
+        android:inputType="textUri"
+        android:paddingHorizontal="16dp" />
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="0dp"
+        android:text="@string/save_txt"
+        android:textColor="?android:textColorPrimary" />
+
+</RelativeLayout>

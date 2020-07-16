@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/captured_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBlack"
+        android:contentDescription="@string/captured_image"
+        android:scaleType="fitCenter"
+        android:visibility="invisible" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/undo_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|bottom"
+        android:layout_margin="44dp"
+        android:outlineProvider="none"
+        android:src="@drawable/ic_baseline_undo_24"
+        android:tooltipText="@string/undo"
+        android:visibility="invisible"
+        app:backgroundTint="@color/colorSemiTransparentWhite" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/next_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:layout_margin="32dp"
+        android:src="@drawable/ic_baseline_arrow_forward_24"
+        android:tooltipText="@string/start_recognition"
+        android:visibility="invisible"
+        app:backgroundTint="@color/colorWhite"
+        app:fabCustomSize="80dp"
+        app:maxImageSize="36dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/gallery_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="44dp"
+        android:outlineProvider="none"
+        android:src="@drawable/ic_outline_photo_24"
+        android:tooltipText="@string/select_from_gallery"
+        app:backgroundTint="@color/colorSemiTransparentWhite" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/capture_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:layout_margin="32dp"
+        android:src="@drawable/ic_baseline_camera_24"
+        android:tooltipText="@string/capture_image"
+        app:backgroundTint="@color/colorWhite"
+        app:fabCustomSize="80dp"
+        app:maxImageSize="36dp" />
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/preview_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <FrameLayout
+        android:id="@+id/progress_bar_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.4"
+        android:animateLayoutChanges="true"
+        android:background="@color/colorBlack"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true" />
+    </FrameLayout>
+
+</merge>

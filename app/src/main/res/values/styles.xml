@@ -1,0 +1,19 @@
+<resources>
+
+    <style name="CameraViewTheme" parent="Theme.MaterialComponents.DayNight">
+        <item name="android:statusBarColor">@color/colorSemiTransparentBlack</item>
+        <item name="actionBarStyle">@style/ActionBarGradient</item>
+        <item name="actionBarSize">64dp</item>
+        <item name="windowActionBarOverlay">true</item>
+    </style>
+
+    <style name="ActionBarGradient" parent="Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="background">@drawable/gradient</item>
+    </style>
+
+    <style name="ResultTheme" parent="Theme.MaterialComponents.DayNight">
+        <item name="colorPrimary">?colorSecondary</item>
+        <item name="colorPrimaryDark">?colorSecondary</item>
+        <item name="colorSurface">?colorSecondary</item>
+    </style>
+</resources>

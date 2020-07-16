@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">HTR</string>
+    <string name="app_full_name">Handwritten Text Recognition</string>
+    <string name="captured_image">Captured Image</string>
+    <string name="no_result">No result!</string>
+    <string name="result">Result</string>
+    <string name="save_txt">Save Txt</string>
+    <string name="text_file_name">Text file name</string>
+    <string name="undo">Undo</string>
+    <string name="start_recognition">Start Recognition</string>
+    <string name="select_from_gallery">Select from Gallery</string>
+    <string name="capture_image">Capture Image</string>
+</resources>
