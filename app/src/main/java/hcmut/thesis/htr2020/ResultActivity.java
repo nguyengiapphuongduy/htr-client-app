@@ -25,7 +25,7 @@ import java.util.stream.Stream;
 import hcmut.thesis.htr2020.constants.RequestCode;
 
 public class ResultActivity extends AppCompatActivity {
-    private String[] requiredPermissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private final String[] requiredPermissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private EditText resultEditText;
     private EditText outFilenameEditText;
 

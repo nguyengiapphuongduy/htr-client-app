@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
+import android.util.Size;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
@@ -40,6 +41,7 @@ import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Stream;
 
+import hcmut.thesis.htr2020.constants.ErrorCode;
 import hcmut.thesis.htr2020.constants.PreviewState;
 import hcmut.thesis.htr2020.constants.RequestCode;
 import hcmut.thesis.htr2020.service.ApiService;
@@ -135,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 viewModel.setBitmap(BitmapUtil.decodeWithExif(inputStream));
                 switchPreviewState(PreviewState.PICKED);
             } catch (IOException e) {
-                Toast.makeText(this, "Error loading file", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Error loading file", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -163,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                 onResume();
             } else {
                 Toast.makeText(this, "Permissions not granted by the user",
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_LONG).show();
                 this.finish();
             }
         }
@@ -200,7 +202,9 @@ public class MainActivity extends AppCompatActivity {
                 viewModel.getCameraProvider().unbindAll();
                 Preview preview = new Preview.Builder().build();
                 preview.setSurfaceProvider(previewView.createSurfaceProvider());
+                Size previewViewSize = new Size(previewView.getWidth(), previewView.getHeight());
                 imageCapture = new ImageCapture.Builder()
+                        .setTargetResolution(previewViewSize)
                         .setTargetRotation(previewView.getDisplay().getRotation())
                         .build();
                 CameraSelector cameraSelector = new CameraSelector.Builder()
@@ -248,6 +252,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     @SuppressWarnings("deprecation")
     private class ApiTask extends AsyncTask<Bitmap, Integer, String> {
+        private ErrorCode errorCode;
 
         @Override
         protected void onPreExecute() {
@@ -259,23 +264,38 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             hideProgressOverlay();
-            sendToNextActivity(result);
+            if (errorCode == ErrorCode.CONNECTION_ERROR) {
+                Toast.makeText(MainActivity.this, "Connection Error", Toast.LENGTH_LONG).show();
+            } else if (errorCode == ErrorCode.MAPPING_ERROR) {
+                Toast.makeText(MainActivity.this, "Missing fields in response", Toast.LENGTH_LONG).show();
+            } else if (errorCode == ErrorCode.RESPONSE_FAILED) {
+                Toast.makeText(MainActivity.this, "Predict failed", Toast.LENGTH_LONG).show();
+            } else {
+                sendToNextActivity(result);
+            }
         }
 
         @Override
         protected void onCancelled() {
             super.onCancelled();
+            hideProgressOverlay();
             switchPreviewState(PreviewState.PREVIEW);
         }
 
         @Override
         protected String doInBackground(Bitmap... params) {
             try {
-                return ApiService.getInstance().htrService(params[0]);
+                String predicted = ApiService.getInstance().htrPredict(params[0]);
+                if (predicted != null) {
+                    return predicted;
+                }
+                errorCode = ErrorCode.RESPONSE_FAILED;
+            } catch (NoSuchFieldException e) {
+                errorCode = ErrorCode.MAPPING_ERROR;
             } catch (IOException e) {
-                e.printStackTrace();
-                return "";
+                errorCode = ErrorCode.CONNECTION_ERROR;
             }
+            return "";
         }
 
         private void hideProgressOverlay() {
